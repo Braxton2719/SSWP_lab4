@@ -2,7 +2,10 @@ import requests
 from models import Character
 from pydantic import ValidationError
 
-character = Character(character_class="", character_race="")
+#add ability scores
+character = Character(character_class="", character_race="", 
+                      strength=0, dexterity=0, constitution=0,
+                      intelligence=0, wisdom=0, charisma=0)
 
 # dedicated to making API requests to view the class options
 def character_classes():
@@ -14,10 +17,21 @@ def character_classes():
         classes_data = class_response.json()
         classes = classes_data['results']
 
-        print("\nStarting off with character class, the available classes are:\n"
-              + "--------------------------------------------------------------\n")
-        for each_class in classes:
-            print(each_class['name'])
+        while True:
+            print("\nStarting off with character class, the available classes are:\n"
+                + "--------------------------------------------------------------\n")
+            class_index = 1
+            for each_class in classes:
+                print(f"{class_index}. {each_class['name']}")
+                class_index += 1
+
+            class_selection = input("Which class would you like to choose? Select the number associated with the class: ")
+            if class_selection.isdigit():
+                class_selection = int(class_selection)
+                if class_selection > 0 and class_selection < 13:
+                    character.character_class = classes[class_selection - 1]['name']
+                    print(f"Your class is now: {character.character_class}")
+                    return
     else:
         print(f"Fetch Failed for {class_url}, Error Code: {class_response.status_code}")
     return
@@ -139,5 +153,7 @@ def start():
     character_classes()
     races()
     ability_scores()
+
+    #finish writing ability score input here
 
 start()
