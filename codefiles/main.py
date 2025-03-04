@@ -76,7 +76,7 @@ def race_selection(race_url):
                 print(f"Your character race is {character.character_race}")
                 return
             elif decision == "2":
-                race()
+                races()
             else:
                 print("Invalid Option...")
 
