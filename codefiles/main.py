@@ -46,8 +46,8 @@ def races():
                 r_decision = int(r_decision)
                 if(r_decision > 0 and r_decision < 10):
                     selected_race_url = races[r_decision - 1]['url']
-                    race_selection(selected_race_url)
-                    return
+                    if race_selection(selected_race_url):  # If confirmed, break the loop
+                        break
                 else:
                     print("Race does not exist...")
             else:
@@ -70,15 +70,66 @@ def race_selection(race_url):
         while True:
             print(f"Are you sure you wish to be a {new_r_data['name']}?")
             print("1. Yes\n2. No")
-            decision = input("Enter Here:")
+            decision = input("Enter Here: ")
             if decision == "1":
                 character.character_race = new_r_data['name']
                 print(f"Your character race is {character.character_race}")
-                return
+                return True
             elif decision == "2":
-                races()
+                return False
             else:
                 print("Invalid Option...")
+    else: 
+        print(f"Fetch Failed for {new_r_url}, Error Code: {new_r_response.status_code}")
+    return
+
+def ability_scores():
+    as_url = "https://www.dnd5eapi.co/api/2014/ability-scores"
+    as_headers = {'Accept': 'application/json'}
+
+    as_response = requests.get(as_url, headers=as_headers)
+    if as_response.status_code == 200:
+        as_data = as_response.json()
+        ability_scores = as_data['results']
+
+        while True:
+            print("\nIn D&D, there are the following ability scores:\n"
+                + "------------------------------------------------------\n")
+            as_index = 1
+            for each_as in ability_scores:
+                print(f"{as_index}. {each_as['name']}")
+                as_index += 1
+
+            as_decision = input("Select the number associated with the option to learn more: ")
+            if as_decision.isdigit():
+                as_decision = int(as_decision)
+                if(as_decision > 0 and as_decision < 7):
+                    selected_as_url = ability_scores[as_decision - 1]['url']
+                    as_selection(selected_as_url)
+                    return
+                else:
+                    print("Ability Score does not exist...")
+            else:
+                print("Invalid entry...")
+    else:
+        print(f"Fetch Failed for {as_url}, Error Code: {as_response.status_code}")
+    return
+
+def as_selection(as_url_sect):
+    new_as_url = f"https://www.dnd5eapi.co{as_url_sect}"
+    new_as_headers = {'Accept': 'application/json'}
+
+    new_as_response = requests.get(new_as_url, headers=new_as_headers)
+    if new_as_response.status_code == 200:
+        new_as_data = new_as_response.json()
+        
+        print(f"\n{new_as_data['full_name']}\n"
+              + "---------------------------------")
+        print(f"Description: {new_as_data['desc']}\n")
+    else:
+        print(f"Fetch Failed for {new_as_url}, Error Code: {new_as_response.status_code}")
+    return
+
 
 
 def start():
@@ -87,5 +138,6 @@ def start():
 
     character_classes()
     races()
+    ability_scores()
 
 start()

@@ -6,3 +6,4 @@ Repository for D&amp;D API Project for Lab 4
 2nd Commit - Made a character_class function for D&D class Data<br>
 3rd Commit - Made a race & race_selection function for getting D&D races<br>
     -> also decided to have models.py have only a class for the created D&D character<br>
+4th Commit - Made ability_score function for telling the user about the various D&D ability scores<br>
