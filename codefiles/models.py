@@ -1,12 +1,8 @@
 from pydantic import BaseModel
 
-class Classes(BaseModel):
-    index: str
-    name: str
-    url: str
+class Character(BaseModel):
+    character_class: str
+    character_race: str
 
-class Races(BaseModel):
-    index: str
-    name: str
-    url: str
-
+    def __repr__(self):
+        return f"You are a {self.character_class}. Your race is {self.character_race}."
