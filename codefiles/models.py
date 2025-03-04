@@ -12,6 +12,6 @@ class Character(BaseModel):
     charisma: int
 
     def __repr__(self):
-        return f"You are a {self.character_class}. Your race is {self.character_race}.\n Your stats are:\n" +\
+        return f"\nYou are a {self.character_race} {self.character_class}.\nYour stats are:\n" +\
                 f"Strength: {self.strength}\nDexterity: {self.dexterity}\nConstitution: {self.constitution}\n" +\
                 f"Intelligence: {self.intelligence}\nWisdom: {self.wisdom}\nCharisma: {self.charisma}\n"

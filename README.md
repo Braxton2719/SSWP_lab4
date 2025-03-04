@@ -12,3 +12,4 @@ Repository for D&amp;D API Project for Lab 4
     -> Also need to create option for deciding if a user is sure they want the class they selected<br>
 6th Commit - Added functionality to allow a user to decide if they want to keep the class they selected<br>
     -> decided that I'll let the ability score allocation be in a separate function
+7th Commit - Added as_allocation() to allocate ability scores from standard array
