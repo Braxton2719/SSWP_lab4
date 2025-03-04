@@ -13,7 +13,7 @@ def character_classes():
     class_headers = {'Accept': 'application/json'}
 
     class_response = requests.get(class_url, headers=class_headers)
-    if class_response.status_code == 200: # successful
+    if class_response.status_code == 200:
         classes_data = class_response.json()
         classes = classes_data['results']
 
@@ -30,11 +30,21 @@ def character_classes():
                 class_selection = int(class_selection)
                 if class_selection > 0 and class_selection < 13:
                     character.character_class = classes[class_selection - 1]['name']
-                    print(f"Your class is now: {character.character_class}")
-                    return
+
+                    # Confirmation loop to decide on class
+                    while True:
+                        print(f"\nAre you sure you want to be a {character.character_class}?\n"
+                              + "1. Yes\n2. No\n")
+                        confirm = input("Enter here: ")
+                        if confirm == "1":
+                            return  # Exit if confirmed
+                        elif confirm == "2":
+                            character.character_class = ""
+                            break  # Go back to class selection
+                        else:
+                            print("Invalid Selection...")
     else:
         print(f"Fetch Failed for {class_url}, Error Code: {class_response.status_code}")
-    return
 
 def races():
     r_url = "https://www.dnd5eapi.co/api/2014/races"
@@ -45,7 +55,6 @@ def races():
         r_data = r_response.json()
         races = r_data['results']
         #print(races[1]['url'])
-
 
         while True:
             print("\nThe options for races include:\n"
